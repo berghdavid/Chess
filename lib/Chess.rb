@@ -34,13 +34,24 @@ class Chess
         end
     end
 
+    def legal_move?(from, to)
+        if(@board[from].nil?)
+            return false
+        end
+
+        move = Move.new(@board[from], to)
+        if(move.piece.possible_move?(@board, to))
+            return true
+        end
+        return false
+    end
+
     def print_board()
         (8).downto(1) do |y|
             puts "\n---------------------------------"
             print "|"
             (1..8).each do |x|
                 temp = @board[[x,y]]
-                
                 if(temp.nil?)
                     print "   |"
                 else
