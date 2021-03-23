@@ -34,16 +34,27 @@ class Chess
         end
     end
 
+    def make_move(from, to)
+        
+    end
+
     def legal_move?(from, to)
         if(@board[from].nil?)
+            return false
+        end
+
+        if(@moves.nil? && @board[from].color != "White")
+            return false
+        elsif(@moves.last.color == @board[from].color)
             return false
         end
 
         move = Move.new(@board[from], to)
         if(move.piece.possible_move?(@board, to))
             return true
+        else
+            return false
         end
-        return false
     end
 
     def print_board()
