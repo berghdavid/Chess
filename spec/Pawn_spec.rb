@@ -3,7 +3,7 @@ require './lib/Move'
 require './lib/Piece'
 require './lib/Pieces/Pawn'
 
-describe Piece do
+describe Pawn do
     before(:all) do
 
 =begin

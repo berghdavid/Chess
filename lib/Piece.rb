@@ -66,20 +66,19 @@ class Piece
                 end
                 i += dir
             end
-        else
+        elsif(@y == to[1])
             @x < to[0] ? dir = 1 : dir = -1 # Direction of movement
             i = x + dir
             while(i != to[0])
-                if(!board[i, @y].nil?)
+                if(!board[[i, @y]].nil?)
                     return false
                 end
                 i += dir
             end
         end
-        if(!board[[i, @y]].nil? && board[to].color == @color)
-            return false
-        end
-        return true
+
+        # Check the last square for eventual capture
+        return (board[to].nil? || board[to].color != @color)
     end
 
     def in_diagonal?(to)

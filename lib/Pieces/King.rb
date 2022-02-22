@@ -24,20 +24,20 @@ class King < Piece
         if(@moves == 0)
             if(@color == "White")
                 if(to == [3, 1] && !board[[1, 1]].nil? && board[[1, 1]].class == Rook && 
-                board[[1, 1]].moves == 0 && empty_straight_path?(board, [2, 1]))
+                board[[1, 1]].moves == 0 && empty_straight_path?(board.board, [2, 1]))
                     # Left castling
                     return true
                 elsif(to == [7, 1] && !board[[8, 1]].nil? && board[[8, 1]].class == Rook && 
-                board[[8, 1]].moves == 0 && empty_straight_path?(board, [2, 1]))
+                board[[8, 1]].moves == 0 && empty_straight_path?(board.board, [2, 1]))
                     # Right castling
                     return true
                 end
             elsif(@color == "Black")
                 if(to == [3, 8] && !board[[1, 8]].nil? && board[[1, 8]].class == Rook && 
-                board[[1, 1]].moves == 0 && empty_straight_path?(board, [2, 8]))
+                board[[1, 1]].moves == 0 && empty_straight_path?(board.board, [2, 8]))
                     return true
                 elsif(to == [7, 8] && !board[[8, 1]].nil? && board[[8, 8]].class == Rook && 
-                board[[8, 8]].moves == 0 && empty_straight_path?(board, [2, 8]))
+                board[[8, 8]].moves == 0 && empty_straight_path?(board.board, [2, 8]))
                     return true
                 end
             end

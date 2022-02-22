@@ -7,9 +7,9 @@ class Queen < Piece
         end
 
         if(in_straight_path?(to))
-            return empty_straight_path?(board, to)
+            return empty_straight_path?(board.board, to)
         elsif(in_diagonal?(to))
-            return empty_diagonal_path?(board, to)
+            return empty_diagonal_path?(board.board, to)
         end
         return false
     end
