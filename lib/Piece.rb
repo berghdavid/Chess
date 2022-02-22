@@ -48,7 +48,7 @@ class Piece
         end
     end
 
-    def within_bounds?(to)
+    def within_bounds?(to = [@x, @y])
         return (to[0] >= 1 && to[0] <= 8 && to[1] >= 1 && to[1] <= 8)
     end
 

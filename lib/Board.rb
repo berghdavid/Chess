@@ -4,11 +4,12 @@ require './lib/Piece'
 Dir["./lib/Pieces/*.rb"].each {|file| require file }
 
 class Board
-    attr_accessor :board
+    attr_accessor :board, :moves
 
     def initialize()
         @board = Hash.new
         init_board
+        @moves = []
     end
 
     def init_board()
@@ -38,27 +39,50 @@ class Board
         end
     end
 
+    def clear_board()
+        @board = Hash.new
+    end
+
+    def get_piece(pos)
+        return @board[pos]
+    end
+
+    def put_piece(piece)
+        if(!piece.color.nil? && piece.within_bounds?)
+            @board[[piece.x, piece.y]] = piece
+        else
+            puts "Error: Piece is missing color or not within bounds!"
+        end
+    end
+
     def make_move(from, to)
-        if(@board.possible_move?(from, to))
+        if(@board.legal_move?(from, to))
             @board[to] = @board[from]
-            @board[from] = Null;
+            @board[from] = nil;
+            @board[to].pos = [to]
+        else
+            puts "Error: Illegal move!"
         end
     end
 
     # Fix errors
     def legal_move?(from, to)
-        if(@board[from].nil?)
+        moving_piece = @board[from]
+        puts moving_piece.class
+
+        if(moving_piece.nil?)
             return false
         end
 
-        if(@moves.nil? && @board[from].color != "White")
-            return false
-        elsif(@moves.last.color == @board[from].color)
+        if(@moves.empty?)
+            if(moving_piece.color != "White")
+                return false
+            end
+        elsif(@moves.last.piece.color == moving_piece.color)
             return false
         end
 
-        move = Move.new(@board[from], to)
-        if(move.piece.possible_move?(@board, to))
+        if(moving_piece.possible_move?(self, to))
             return true
         else
             return false

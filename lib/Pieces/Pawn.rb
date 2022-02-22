@@ -18,16 +18,16 @@ class Pawn < Piece
         if(!within_bounds?(to))
             return false
         end
-        if(diffX == 0 && board[[to[0], to[1]]].nil?)
+        if(diffX == 0 && board.board[[to[0], to[1]]].nil?)
             if(diffY == right_dir_y)# Move 1
                 return true
-            elsif(diffY == 2*right_dir_y && @moves == 0 && board[[to[0], to[1] - right_dir_y]].nil?)# Move 2
+            elsif(diffY == 2*right_dir_y && @moves == 0 && board.board[[to[0], to[1] - right_dir_y]].nil?)# Move 2
                 return true
             end
         elsif(diffX.abs == 1 && diffY == right_dir_y)
-            if(!board[[to[0], to[1]]].nil? && board[[to[0], to[1]]].color == opp_color)# Capture
+            if(!board.board[[to[0], to[1]]].nil? && board.board[[to[0], to[1]]].color == opp_color)# Capture
                 return true
-            elsif(@y = passant_pos_y && board.moves.last.class == Pawn && board.moves.last.to[0] = to[0])# En passant or capture
+            elsif(@y == passant_pos_y && !board.moves.empty? && board.moves.last.piece.class == Pawn && board.moves.last.to[0] == to[0])# En passant or capture
                 return true
             end
         end
