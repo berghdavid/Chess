@@ -1,87 +1,42 @@
 require 'colorize'
+require './lib/Board'
 require './lib/Piece'
 require './lib/Move'
 
 class Chess
     attr_accessor :board, :moves
     def initialize()
-        @board = Hash.new
-        init_board
+        @board = Board.new()
         @moves = []
     end
 
-    def init_board()
-        (1..8).each do |i|
-            @board[[i,2]] = Pawn.new("White", [i,2])
-            @board[[i,7]] = Pawn.new("Black", [i,7])
-        end
-        (1..2).each do |i|
-            if (i == 1)
-                color = "White"
-                y  = 1
-            else
-                color = "Black"
-                y = 8
-            end
-            @board[[1,y]] = Rook.new(color, [1,y])
-            @board[[2,y]] = Knight.new(color, [2,y])
-            @board[[3,y]] = Bishop.new(color, [3,y])
-            @board[[4,y]] = Queen.new(color, [4,y])
-            @board[[5,y]] = King.new(color, [5,y])
-            @board[[6,y]] = Bishop.new(color, [6,y])
-            @board[[7,y]] = Knight.new(color, [7,y])
-            @board[[8,y]] = Rook.new(color, [8,y])
-        end
-    end
-
     def make_move(from, to)
-        
-    end
-
-    def legal_move?(from, to)
-        if(@board[from].nil?)
-            return false
-        end
-
-        if(@moves.nil? && @board[from].color != "White")
-            return false
-        elsif(@moves.last.color == @board[from].color)
-            return false
-        end
-
-        move = Move.new(@board[from], to)
-        if(move.piece.possible_move?(@board, to))
-            return true
-        else
-            return false
-        end
-    end
-
-    def print_board()
-        (8).downto(1) do |y|
-            puts "\n---------------------------------"
-            print "|"
-            (1..8).each do |x|
-                temp = @board[[x,y]]
-                if(temp.nil?)
-                    print "   |"
-                else
-                    print " "
-                    if(temp.color == "White")
-                        print temp.get_initials.white
-                    else
-                        print temp.get_initials.blue
-                    end
-                    print " |"
-                end
-            end
-        end
-        puts "\n---------------------------------"
+        @board.make_move(from, to)
     end
 end
 
 c = Chess.new()
-c.init_board
-c.print_board
-puts c.board[[1,1]].possible_move?(c.board, [1,3])
-puts c.board[[1,2]].possible_move?(c.board, [1,3])
+c.board.print_board
+puts c.board.legal_move?([1,1], [1,3])
+puts c.board.legal_move?([1,2], [1,3])
+
+
+###
+board = Board.new
+board.clear_board
+white_pawn1 = Pawn.new("White", [3,3])
+white_pawn1.moves = 1 # Disables forward move 2, lets black_pawn3 passant this pawn
+white_pawn2 = Pawn.new("White", [5,5])
+white_pawn2.moves = 2
+black_pawn1 = Pawn.new("Black", [3,4])
+black_pawn1.moves = 1
+black_pawn2 = Pawn.new("Black", [4,4])
+black_pawn2.moves = 2
+black_pawn3 = Pawn.new("Black", [2,3])
+black_pawn3.moves = 2
+board.put_piece(white_pawn1)
+board.put_piece(white_pawn2)
+board.put_piece(black_pawn1)
+board.put_piece(black_pawn2)
+board.put_piece(black_pawn3)
+board.print_board
