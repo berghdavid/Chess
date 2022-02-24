@@ -10,7 +10,7 @@ class Knight < Piece
         diff_y = (to[1] - @y).abs
 
         if((diff_x == 1 && diff_y == 2) || (diff_x == 2 && diff_y == 1))
-            if(!board[[i, @y]].nil? && board[[i, @y]].color == @color)
+            if(!board.board[to].nil? && board.board[to].color == @color)
                 return false
             else
                 return true
