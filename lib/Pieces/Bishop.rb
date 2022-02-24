@@ -6,9 +6,7 @@ class Bishop < Piece
             return false
         end    
 
-        if(in_diagonal?(to))
-            return empty_diagonal_path?(board, to)
-        end
+        return (in_diagonal?(to) && empty_diagonal_path?(board.board, to))
     end
 
     def all_possible_moves()
