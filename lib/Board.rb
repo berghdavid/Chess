@@ -56,35 +56,43 @@ class Board
     end
 
     def make_move(from, to)
-        if(@board.legal_move?(from, to))
+        move = Move.new(@board[from], from, to)
+        if(legal_move?(from, to))
+            @moves.append(move)
+
             @board[to] = @board[from]
             @board[from] = nil;
-            @board[to].pos = [to]
+            @board[to].set_pos(to)
+            
+            return true
         else
-            puts "Error: Illegal move!"
+            return false
         end
     end
 
     # Fix errors
     def legal_move?(from, to)
         moving_piece = @board[from]
-        puts moving_piece.class
 
         if(moving_piece.nil?)
+            puts "Illegal move: No piece exists in the moving square."
             return false
         end
 
         if(@moves.empty?)
             if(moving_piece.color != "White")
+                puts "Illegal move: First move should be done by White."
                 return false
             end
         elsif(@moves.last.piece.color == moving_piece.color)
+            puts "Illegal move: Last move was done by this color."
             return false
         end
 
         if(moving_piece.possible_move?(self, to))
             return true
         else
+            puts "Illegal move: That move is not possible according to chess rules."
             return false
         end
     end

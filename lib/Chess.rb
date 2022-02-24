@@ -7,33 +7,48 @@ class Chess
     attr_accessor :board, :moves
     def initialize()
         @board = Board.new()
-        @moves = []
+    end
+
+    def run()
+        while(true)
+            prompt_move()
+        end
+    end
+
+    def prompt_move()
+        if(@board.moves.length % 2 == 0)
+            color = "white"
+        else
+            color = "black"
+        end
+
+        move_done = false
+        while(!move_done)
+            @board.print_board
+
+            puts "Make your move, #{color}"
+            input = gets.chomp
+
+            if(proper_input(input))
+                from = [input[0].to_i, input[1].to_i]
+                to = [input[2].to_i, input[3].to_i]
+
+                move_done = make_move(from, to)
+            end
+        end
+
+    end
+
+    def proper_input(input)
+        return input.length == 4
+        # TODO: Check that all characters are numbers.
     end
 
     def make_move(from, to)
-        @board.make_move(from, to)
+        return @board.make_move(from, to)
     end
 end
 
-c = Chess.new()
-c.board.print_board
-puts c.board.legal_move?([1,1], [1,3])
-puts c.board.legal_move?([1,2], [1,3])
-
-
 ###
-board = Board.new
-board.clear_board
-
-white_knight1 = Knight.new("White", [3, 3])
-white_knight2 = Knight.new("White", [5, 4])
-
-black_knight1 = Knight.new("Black", [3, 5])
-black_knight2 = Knight.new("Black", [4, 5])
-
-board.put_piece(white_knight1)
-board.put_piece(white_knight2)
-board.put_piece(black_knight1)
-board.put_piece(black_knight2)
-
-board.print_board
+game = Chess.new()
+game.run
