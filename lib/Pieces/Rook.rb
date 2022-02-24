@@ -32,4 +32,8 @@ class Rook < Piece
     def get_initials()
         return "R"
     end
+
+    def get_symbol()
+        return @color == "White" ? "♖" : "♜"
+    end
 end

@@ -52,4 +52,8 @@ class Pawn < Piece
     def get_initials()
         return "P"
     end
+
+    def get_symbol()
+        return @color == "White" ? "♙" : "♟︎"
+    end
 end

@@ -17,4 +17,8 @@ class Queen < Piece
     def get_initials()
         return "Q"
     end
+
+    def get_symbol()
+        return @color == "White" ? "♕" : "♛"
+    end
 end
