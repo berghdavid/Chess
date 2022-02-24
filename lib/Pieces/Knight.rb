@@ -36,4 +36,8 @@ class Knight < Piece
     def get_initials()
         return "N"
     end
+
+    def get_symbol()
+        return @color == "White" ? "♘" : "♞"
+    end
 end

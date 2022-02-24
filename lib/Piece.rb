@@ -12,39 +12,6 @@ class Piece
         @y = pos[1]
     end
 
-    def player_checked?(board, color)
-        king = find_king
-        opposing_pieces = all_of_color(board, king.opp_color)
-        for piece in opposing_pieces
-            if(piece.possible_move?(board, [king.x, king.y]))
-                return false
-            end
-        end
-    end
-
-    def find_king(board, color)
-        (1..8).each do |x|
-            (1..8).each do |y|
-                if(!board[[x, y]].nil? && board[[x, y]].class == King && board[[x, y]].color == color)
-                    return board[[x, y]]
-                end
-            end
-        end
-        return nil
-    end
-
-    def all_of_color(board, color)
-        pieces = []
-        (1..8).each do |x|
-            (1..8).each do |y|
-                if(!board[[x, y]].nil? && board[[x, y]].color == color)
-                    pieces += board[[x, y]]
-                end
-            end
-        end
-        return pieces
-    end
-
     def opp_color()
         if(@color == "White")
             return "Black"

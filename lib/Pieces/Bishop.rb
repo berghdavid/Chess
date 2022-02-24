@@ -43,4 +43,8 @@ class Bishop < Piece
     def get_initials()
         return "B"
     end
+
+    def get_symbol()
+        return @color == "White" ? "♗" : "♝"
+    end
 end

@@ -47,4 +47,8 @@ class King < Piece
     def get_initials()
         return "K"
     end
+
+    def get_symbol()
+        return @color == "White" ? "♔" : "♚"
+    end
 end
