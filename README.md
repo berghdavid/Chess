@@ -1,4 +1,4 @@
 # Chess
--
+Chess application built using Ruby
 
-`ruby lib/Chess.rb`
+TDD used with the rspec gem

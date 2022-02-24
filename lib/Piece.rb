@@ -7,6 +7,11 @@ class Piece
         @y = pos[1]
     end
 
+    def set_pos(pos)
+        @x = pos[0]
+        @y = pos[1]
+    end
+
     def player_checked?(board, color)
         king = find_king
         opposing_pieces = all_of_color(board, king.opp_color)
