@@ -87,35 +87,9 @@ class Piece
     end
 
     def in_diagonal?(to)
-        diagonal_squares = []
-
-        x1 = @x
-        y1 = @y
-        while(x1 != 1 && y1 != 1) #Replace with if x > y else
-            x1 -= 1
-            y1 -= 1
-        end
-        while(x1 <= 8 && y1 <= 8)
-            diagonal_squares += [[x1, y1]]
-            x1 += 1
-            y1 += 1
-        end
-
-        x2 = @x
-        y2 = @y
-        while(x2 != 1 && y2 != 8)
-            x2 -= 1
-            y2 += 1
-        end
-        while(x2 <= 8 && y2 >= 1)
-            diagonal_squares += [[x2, y2]]
-            x2 += 1
-            y2 -= 1
-        end
-        diagonal_squares = diagonal_squares.select {
-            |sq| sq != [@x, @y] # Removes square [@x, @y]
-        }
-        return diagonal_squares.include?(@x, @y)
+        diffx = to[0] - @x
+        diffy = to[1] - @y
+        return diffx.abs == diffy.abs
     end
 
     def empty_diagonal_path?(board, to)
@@ -124,21 +98,25 @@ class Piece
         else
             x_dir = -1
         end
+
         if(to[1] > @y)
             y_dir = 1
         else
             y_dir = -1
         end
-        temp = [@x, @y]
+
+        temp = [@x + x_dir, @y + y_dir]
         while(temp != to)
             if(!board[temp].nil?)
                 return false
             end
             temp = [temp[0] + x_dir, temp[1] + y_dir]
         end
+
         if(!board[to].nil? && board[to].color == @color)
             return false
         end
+
         return true
     end
 
