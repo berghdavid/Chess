@@ -59,7 +59,7 @@ class Chess
                 to = [$key_mappings[input[3]], input[4].to_i]
 
                 @board.make_move(from, to)
-                finished = board.victory_check()
+                finished = board.checkmate?
             else
                 puts "Your command could not be interpreted. Type 'help' for help."
             end
@@ -80,10 +80,15 @@ class Chess
 
     def proper_move(input)
         formats = input.length == 5 && input[2] == " "
-        letters = letter?(input[0]) && letter?(input[3])
-        numbers = numeric?(input[1]) && numeric?(input[4])
+        if(input.length == 5 && input[2] == " ")
+            letters = letter?(input[0]) && letter?(input[3])
+            numbers = numeric?(input[1]) && numeric?(input[4])
+            
+            return letters && numbers
+        else
+            return false
+        end
 
-        return formats && letters && numbers
     end
 
     def letter?(symbol)

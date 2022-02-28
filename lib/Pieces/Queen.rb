@@ -14,6 +14,29 @@ class Queen < Piece
         return false
     end
 
+    def all_possible_moves(board)
+        return reachable_squares(board).select {
+            |sq| possible_move?(board, sq)
+        }
+    end
+
+    def reachable_squares(board)
+        reachable_squares = []
+
+        (1..8).each do |x|
+            (1..8).each do |y|
+                to = [x, y]
+                if(in_straight_path?(to) && reachable_straight_path?(board.board, to) && [@x, @y] != to)
+                    reachable_squares.append(to)
+                elsif(in_diagonal?(to) && reachable_diagonal_path?(board.board, to) && [@x, @y] != to)
+                    reachable_squares.append(to) 
+                end
+            end
+        end
+
+        return reachable_squares
+    end
+
     def get_initials()
         return "Q"
     end

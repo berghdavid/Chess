@@ -18,7 +18,7 @@ class Pawn < Piece
         if(!within_bounds?(to))
             return false
         end
-        if(diffX == 0 && board.board[[to[0], to[1]]].nil?)
+        if(diffX == 0 && board.board[to].nil?)
             if(diffY == right_dir_y)# Move 1
                 return true
             elsif(diffY == 2*right_dir_y && @moves == 0 && board.board[[to[0], to[1] - right_dir_y]].nil?)# Move 2
@@ -38,15 +38,31 @@ class Pawn < Piece
         @color == "White" ? right_dir_y = 1 : right_dir_y = -1
         
         moves = [[@x, @y + right_dir_y], [@x, @y + 2*right_dir_y], 
-        [@x + 1, @y + right_dir_y], [@x - 1, @y + right_dir_y]]
+                [@x + 1, @y + right_dir_y], [@x - 1, @y + right_dir_y]]
         
         all_moves = []
         for to in moves
             if(possible_move?(board, to))
-                all_moves += [to]
+                all_moves.append(to)
             end
         end
         return all_moves
+    end
+
+    def reachable_squares(board)
+        reachable_squares = []
+
+        @color == "White" ? right_dir_y = 1 : right_dir_y = -1
+        
+        captures = [[@x + 1, @y + right_dir_y], [@x - 1, @y + right_dir_y]]
+        
+        for to in captures
+            if(within_bounds?(to))
+                reachable_squares.append(to)
+            end
+        end
+
+        return reachable_squares
     end
 
     def get_initials()
