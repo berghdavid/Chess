@@ -32,7 +32,7 @@ class Piece
         if(@x == to[0])
             @y < to[1] ? dir = 1 : dir = -1 # Direction of movement
             i = @y + dir
-            while(i != to[1])
+            while(i != to[1] && within_bounds?([@x, i]))
                 if(!board[[@x, i]].nil?)
                     return false
                 end
@@ -41,7 +41,7 @@ class Piece
         elsif(@y == to[1])
             @x < to[0] ? dir = 1 : dir = -1 # Direction of movement
             i = x + dir
-            while(i != to[0])
+            while(i != to[0] && within_bounds?([i, @y]))
                 if(!board[[i, @y]].nil?)
                     return false
                 end
@@ -53,6 +53,30 @@ class Piece
         return (board[to].nil? || board[to].color != @color)
     end
 
+    def reachable_straight_path?(board, to)
+        if(@x == to[0])
+            @y < to[1] ? dir = 1 : dir = -1 # Direction of movement
+            i = @y + dir
+            while(i != to[1] && within_bounds?([@x, i]))
+                if(!board[[@x, i]].nil?)
+                    return false
+                end
+                i += dir
+            end
+        elsif(@y == to[1])
+            @x < to[0] ? dir = 1 : dir = -1 # Direction of movement
+            i = x + dir
+            while(i != to[0] && within_bounds?([i, @y]))
+                if(!board[[i, @y]].nil?)
+                    return false
+                end
+                i += dir
+            end
+        end
+        
+        return true
+    end
+
     def in_diagonal?(to)
         diffx = to[0] - @x
         diffy = to[1] - @y
@@ -60,6 +84,10 @@ class Piece
     end
 
     def empty_diagonal_path?(board, to)
+        if(to[0] == @x || to[1] == @y)
+            return true
+        end
+
         if(to[0] > @x)
             x_dir = 1
         else
@@ -82,6 +110,34 @@ class Piece
 
         if(!board[to].nil? && board[to].color == @color)
             return false
+        end
+
+        return true
+    end
+
+    def reachable_diagonal_path?(board, to)
+        if(to[0] == @x || to[1] == @y)
+            return true
+        end
+
+        if(to[0] > @x)
+            x_dir = 1
+        else
+            x_dir = -1
+        end
+
+        if(to[1] > @y)
+            y_dir = 1
+        else
+            y_dir = -1
+        end
+
+        temp = [@x + x_dir, @y + y_dir]
+        while(temp != to)
+            if(!board[temp].nil?)
+                return false
+            end
+            temp = [temp[0] + x_dir, temp[1] + y_dir]
         end
 
         return true

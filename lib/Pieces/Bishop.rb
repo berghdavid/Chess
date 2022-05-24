@@ -9,16 +9,24 @@ class Bishop < Piece
         return (in_diagonal?(to) && empty_diagonal_path?(board.board, to))
     end
 
-    def all_possible_moves()
-        diagonal_squares = []
+    def all_possible_moves(board)
+        return reachable_squares(board).select {
+            |sq| possible_move?(board, sq)
+        }
+    end
+
+    def reachable_squares(board)
+        reachable_squares = []
         x1 = @x
         y1 = @y
         while(x1 != 1 && y1 != 1) #Replace with if x > y else
             x1 -= 1
             y1 -= 1
         end
-        while(x1 <= 8 && y1 <= 8)
-            diagonal_squares += [[x1, y1]]
+        while(x1 <= 8 && y1 <= 8 && reachable_diagonal_path?(board.board, [x1, y1]))
+            if([@x, @y] != [x1, y1])
+                reachable_squares.append([x1, y1])
+            end
             x1 += 1
             y1 += 1
         end
@@ -29,15 +37,15 @@ class Bishop < Piece
             x2 -= 1
             y2 += 1
         end
-        while(x2 <= 8 && y2 >= 1)
-            diagonal_squares += [[x2, y2]]
+        while(x2 <= 8 && y2 >= 1 && reachable_diagonal_path?(board.board, [x2, y2]))
+            if([@x, @y] != [x2, y2])
+                reachable_squares.append([x2, y2])
+            end
             x2 += 1
             y2 -= 1
         end
-        possible_moves = diagonal_squares.select {
-            |sq| sq != [@x, @y] && possible_move?(board, sq)
-        }
-        return possible_moves
+
+        return reachable_squares
     end
 
     def get_initials()
