@@ -2,7 +2,8 @@ require './lib/Piece'
 
 class King < Piece
     def possible_move?(board, to)
-        if(!within_bounds?(to) || [@x, @y] == to)
+        if(!within_bounds?(to))
+            puts "Not within bounds"
             return false
         end
 

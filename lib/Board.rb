@@ -167,9 +167,18 @@ class Board
     end
 
     def print_all_moves
+        i = 0
+
         for move in @moves do
+            if(i % 2 == 0)
+                print "\n#{i/2}. "
+            else
+                print " "
+            end
             move.print_move
+            i = i + 1
         end
+        puts ""
     end
 
     def reachable_squares(color)
@@ -250,6 +259,7 @@ class Board
             end
         end
 
+        print_board()
         puts "Checkmate! #{opp_color(color)} wins!"
         return true
     end

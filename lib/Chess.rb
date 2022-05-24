@@ -26,6 +26,8 @@ class Chess
                 print_help
             elsif(input == "exit")
                 puts "There is no game to exit."
+            elsif(input == "moves")
+                puts "There are no moves to show."
             elsif(input == "quit")
                 puts "Quitting program..."
                 exit(true)
@@ -48,6 +50,8 @@ class Chess
                 puts "You are already playing a game. You must exit this game to be able to start a new."
             elsif(input == "help")
                 print_help
+            elsif(input == "moves")
+                @board.print_all_moves
             elsif(input == "exit")
                 puts "Exiting current game..."
                 finished = true
@@ -73,6 +77,7 @@ class Chess
 
     def print_help()
         puts " - start      Starts a new chess game. Move inputs are on the format 'from to'. For example: e2 e4"
+        puts " - moves      Prints all the made moves in the current game"
         puts " - help       Lists the available commands."
         puts " - exit       Exits the current game."
         puts " - quit       Closes the program."

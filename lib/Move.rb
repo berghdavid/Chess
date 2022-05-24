@@ -7,6 +7,6 @@ class Move
     end
 
     def print_move()
-        puts "#{piece.class}: #{$inv_key_mappings[from[0]]}#{from[1]} #{$inv_key_mappings[to[0]]}#{to[1]}"
+        print "#{piece.get_initials}#{$inv_key_mappings[from[0]]}#{from[1]}#{$inv_key_mappings[to[0]]}#{to[1]}"
     end
 end
